@@ -11,6 +11,15 @@ class Utils {
     expect(url).toContain(urlString);
   }
 
+  async isStringContians(locator: string, string: string): Promise<void> {
+    await this.page
+      .locator(locator)
+      .textContent()
+      .then((text) => {
+        expect(text).toContain(string);
+      });
+  }
+
   async isStringVisible(locator: string, string: string): Promise<void> {
     await this.page
       .locator(locator)

@@ -8,17 +8,18 @@ class LoginPage {
     this.page = page;
   }
 
+  async fillLogInEntryFields(): Promise<void> {
+    const user = newUser;
+    await this.page.locator("input[id='username']").pressSequentially(user.email, { delay: 100 });
+    await this.page.locator("input[id='password']").pressSequentially(user.password, { delay: 100 });
+    await this.page.locator("button[value='Zaloguj się']").click({ force: true });
+  }
+
   async fillSignUpEntryFields(): Promise<void> {
     const user = newUser;
-    await this.page
-      .locator("input[id='reg_email']")
-      .pressSequentially(user.email, { delay: 100 });
-    await this.page
-      .locator("input[id='reg_password']")
-      .pressSequentially(user.password, { delay: 100 });
-    await this.page
-      .locator("button[value='Zarejestruj się']")
-      .click({ force: true });
+    await this.page.locator("input[id='reg_email']").pressSequentially(user.email, { delay: 100 });
+    await this.page.locator("input[id='reg_password']").pressSequentially(user.password, { delay: 100 });
+    await this.page.locator("button[value='Zarejestruj się']").click({ force: true });
   }
 }
 
