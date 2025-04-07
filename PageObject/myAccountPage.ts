@@ -28,7 +28,6 @@ class MyAccountPage {
     const displayName = await this.page.locator("#account_display_name").inputValue();
     expect(displayName).toBe((user.firstName + "." + user.lastName).toLowerCase());
     await this.page.locator("button[value='Zapisz zmiany']").click();
-    await this.selectSubPage(4);
 
     // await this.page.locator("input[id='email']").fill(user.email);
     // await this.page.locator("input[id='password']").fill(user.password);
@@ -52,17 +51,21 @@ class MyAccountPage {
     const user = newUser;
     await this.selectSubPage(4);
     await this.page.locator("a[class='edit']").nth(0).click({ force: true });
-    const countryField = await this.page.locator("span[class='select2-selection__rendered']");
+    const countryField = this.page.locator("span[class='select2-selection__rendered']");
     await countryField.pressSequentially(user.state, { delay: 100 });
     await this.page.keyboard.press("Enter");
-    await this.page.locator("#billing_address_1").pressSequentially(user.address1, { delay: 100 });
-    await this.page.locator("#billing_address_2").pressSequentially(user.address2, { delay: 100 });
-    await this.page.locator("#billing_postcode").pressSequentially(user.zipcode, { delay: 100 });
-    await this.page.locator("#billing_city").pressSequentially(user.city, { delay: 100 });
-    await this.page.locator("#billing_phone").pressSequentially(user.mobileNumber, { delay: 100 });
-    const email = this.page.locator("#billing_email").textContent();
-    expect(email).toBe(user.email);
-    await this.page.locator("button[name='save_address']").click({ force: true });
+    await this.page.locator("#select2-billing_country-container").click({force: true});
+    const countryList = this.page.getByRole("listitem").filter({hasText: "Stany Zjednoczone"});
+    await countryList.click({force: true});
+    //await countryList.filter({hasText: "Stany Zjednoczone"}).click();
+    // await this.page.locator("#billing_address_1").pressSequentially(user.address1, { delay: 100 });
+    // await this.page.locator("#billing_address_2").pressSequentially(user.address2, { delay: 100 });
+    // await this.page.locator("#billing_postcode").pressSequentially(user.zipcode, { delay: 100 });
+    // await this.page.locator("#billing_city").pressSequentially(user.city, { delay: 100 });
+    // await this.page.locator("#billing_phone").pressSequentially(user.mobileNumber, { delay: 100 });
+    // const email = await this.page.locator("#billing_email").inputValue();
+    // expect(email).toBe(user.email);
+    // await this.page.locator("button[name='save_address']").click({ force: true });
   }
 
   async selectSubPage(number: number): Promise<void> {

@@ -11,13 +11,16 @@ class Utils {
     expect(url).toContain(urlString);
   }
 
-  async isStringContians(locator: string, string: string): Promise<void> {
-    await this.page
-      .locator(locator)
-      .textContent()
-      .then((text) => {
-        expect(text).toContain(string);
-      });
+  async isStringContians(locator: string, expectedString: string): Promise<void> {
+    const element = this.page.locator(locator)
+    expect(element).toBeVisible();
+    await element.textContent().then((text) => {
+      expect(text).toContain(expectedString);
+    })
+      // .textContent()
+      // .then((text) => {
+      //   expect(text).toContain(string);
+      // });
   }
 
   async isStringVisible(locator: string, string: string): Promise<void> {
@@ -26,6 +29,7 @@ class Utils {
       .textContent()
       .then((text) => {
         expect(text).toContain(string);
+        //expect(text).toBeVisible();
       });
   }
 
