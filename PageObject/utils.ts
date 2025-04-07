@@ -12,15 +12,15 @@ class Utils {
   }
 
   async isStringContians(locator: string, expectedString: string): Promise<void> {
-    const element = this.page.locator(locator)
+    const element = this.page.locator(locator);
     expect(element).toBeVisible();
     await element.textContent().then((text) => {
       expect(text).toContain(expectedString);
-    })
-      // .textContent()
-      // .then((text) => {
-      //   expect(text).toContain(string);
-      // });
+    });
+    // .textContent()
+    // .then((text) => {
+    //   expect(text).toContain(string);
+    // });
   }
 
   async isStringVisible(locator: string, string: string): Promise<void> {

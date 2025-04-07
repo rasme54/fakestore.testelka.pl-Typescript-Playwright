@@ -54,9 +54,9 @@ class MyAccountPage {
     const countryField = this.page.locator("span[class='select2-selection__rendered']");
     await countryField.pressSequentially(user.state, { delay: 100 });
     await this.page.keyboard.press("Enter");
-    await this.page.locator("#select2-billing_country-container").click({force: true});
-    const countryList = this.page.getByRole("listitem").filter({hasText: "Stany Zjednoczone"});
-    await countryList.click({force: true});
+    await this.page.locator("#select2-billing_country-container").click({ force: true });
+    const countryList = this.page.getByRole("listitem").filter({ hasText: "Stany Zjednoczone" });
+    await countryList.click({ force: true });
     //await countryList.filter({hasText: "Stany Zjednoczone"}).click();
     // await this.page.locator("#billing_address_1").pressSequentially(user.address1, { delay: 100 });
     // await this.page.locator("#billing_address_2").pressSequentially(user.address2, { delay: 100 });
@@ -79,7 +79,7 @@ class MyAccountPage {
      */
     if (number >= 0 && number <= 5) {
       const dashboardButton = this.page.locator("ul[class='phoen_nav_tab'] > li > a").nth(--number);
-      expect(dashboardButton).toBeVisible();
+      await expect(dashboardButton).toBeVisible();
       await dashboardButton.click({ force: true });
     }
   }
