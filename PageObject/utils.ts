@@ -12,15 +12,15 @@ class Utils {
   }
 
   async isStringContians(locator: string, expectedString: string): Promise<void> {
-    const element = this.page.locator(locator)
+    const element = this.page.locator(locator);
     expect(element).toBeVisible();
     await element.textContent().then((text) => {
       expect(text).toContain(expectedString);
-    })
-      // .textContent()
-      // .then((text) => {
-      //   expect(text).toContain(string);
-      // });
+    });
+    // .textContent()
+    // .then((text) => {
+    //   expect(text).toContain(string);
+    // });
   }
 
   async isStringVisible(locator: string, string: string): Promise<void> {
@@ -31,6 +31,11 @@ class Utils {
         expect(text).toContain(string);
         //expect(text).toBeVisible();
       });
+  }
+  async selectFromDropdown(value: string): Promise<void> {
+    await this.page.locator("span[class='select2-selection__arrow']").click({ force: true });
+    await this.page.locator("input[class='select2-search__field']").fill(value);
+    await this.page.keyboard.press("Enter");
   }
 
   async turnOffPopUp(locator: string, button: string): Promise<void> {

@@ -24,11 +24,17 @@ test.describe("Scenario 1: Register User", () => {
     await utils.isStringVisible("div[class='u-column2 col-2'] > h2", "Zarejestruj się");
     await utils.turnOffPopUp("p[class='woocommerce-store-notice demo_store']", "a[class='woocommerce-store-notice__dismiss-link']");
     await loginPage.fillSignUpEntryFields();
-    await myAccountPage.fillAccountInformation();
-    await utils.isStringContians("div[class='woocommerce-message']", "Zmieniono szczegóły konta."); // tutaj error
+    await myAccountPage.fillAccountInformation(user);
+    await utils.isStringContians("div[class='woocommerce-message']", "Zmieniono szczegóły konta.");
     await myAccountPage.selectSubPage(4);
     await utils.isPageValid("https://fakestore.testelka.pl/moje-konto/edytuj-adres/");
-    await myAccountPage.fillBillingAddressInformation();
+    await myAccountPage.selectSubPage(4);
+    await myAccountPage.fillBillingAddressInformation(user);
+    await utils.isStringContians("div[class='woocommerce-message']", "Adres został zmieniony.");
+    await myAccountPage.fillDeliveryAddressInformation(user);
+    await utils.isStringContians("div[class='woocommerce-message']", "Adres został zmieniony.");
+    await myAccountPage.selectSubPage(1)
+    await myAccountPage.deleteAccount();
   });
   test("TestCase2: Delete User", async ({ page }) => {
     await page.goto("/");
