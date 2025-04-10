@@ -17,10 +17,6 @@ class Utils {
     await element.textContent().then((text) => {
       expect(text).toContain(expectedString);
     });
-    // .textContent()
-    // .then((text) => {
-    //   expect(text).toContain(string);
-    // });
   }
 
   async isStringVisible(locator: string, string: string): Promise<void> {
@@ -29,7 +25,6 @@ class Utils {
       .textContent()
       .then((text) => {
         expect(text).toContain(string);
-        //expect(text).toBeVisible();
       });
   }
   async selectFromDropdown(value: string): Promise<void> {

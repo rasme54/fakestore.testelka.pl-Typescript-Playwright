@@ -31,6 +31,7 @@ class MyAccountPage {
     const displayName = await this.page.locator("#account_display_name").inputValue();
     expect(displayName).toBe((user.firstName + "." + user.lastName).toLowerCase());
     await this.page.locator("button[value='Zapisz zmiany']").click();
+    await this.utils.isStringContians("div[class='woocommerce-message']", "Zmieniono szczegóły konta.");
   }
   async fillBillingAddressInformation(user: any): Promise<void> {
     await this.page.locator("a[class='edit']").nth(0).click({ force: true });
@@ -43,6 +44,7 @@ class MyAccountPage {
     const email = await this.page.locator("input[id='billing_email']").inputValue();
     expect(email).toBe(user.email);
     await this.page.locator("button[value='Zapisz adres']").click({ force: true });
+    await this.utils.isStringContians("div[class='woocommerce-message']", "Adres został zmieniony.");
   }
 
   async fillDeliveryAddressInformation(user: any): Promise<void> {
@@ -55,6 +57,19 @@ class MyAccountPage {
     await this.page.locator("#shipping_postcode").fill(user.zipcode);
     await this.page.locator("#shipping_city").fill(user.city);
     await this.page.locator("button[value='Zapisz adres']").click({ force: true });
+    await this.utils.isStringContians("div[class='woocommerce-message']", "Adres został zmieniony.");
+  }
+
+  async isUserLoggedIn(user: any): Promise<void> {
+    const url = this.page.url();
+    if (url != "https://fakestore.testelka.pl/moje-konto/") {
+      this.selectSubPage(1);
+    }
+    let email = user.email;
+    const userName = email.split("@")[0];
+    const expectedMessage = `Witaj ${userName} (nie jesteś ${userName}? Wyloguj się)`;
+    const loggedUserMessage = await this.page.locator("div[class='woocommerce-MyAccount-content'] > p").nth(0).textContent();
+    expect(loggedUserMessage).toBe(expectedMessage);
   }
 
   async selectSubPage(number: number): Promise<void> {
