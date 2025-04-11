@@ -12,7 +12,7 @@ class HomePage {
 
   async selectLogInPage(): Promise<void> {
     await this.page.locator("li[id='menu-item-201'] > a").click();
-    await this.utils.isStringVisible("div[class='u-column2 col-2'] > h2", "Zarejestruj się");
+    await this.utils.isStringContains("div[class='u-column2 col-2'] > h2", "Zarejestruj się");
   }
 }
 

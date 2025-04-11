@@ -41,7 +41,7 @@ test.describe("Scenario 1: Register User", () => {
     await homePage.selectLogInPage();
     await loginPage.fillSignUpEntryFields(user);
     const expectedString = "Konto jest już zarejestrowane w exisitngjohn.doe@email.com. Zaloguj się lub użyj innego adresu e-mail.";
-    await utils.isStringVisible("ul[class='woocommerce-error'] > li", expectedString);
+    await utils.isStringContains("ul[class='woocommerce-error'] > li", expectedString);
   });
 
   test.skip("Helper Case: Delete User", async ({ page }) => {
