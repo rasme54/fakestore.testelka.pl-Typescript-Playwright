@@ -6,6 +6,13 @@ class Utils {
     this.page = page;
   }
 
+  async areElementsVisible(elements: any[]): Promise<void> {
+    for (const element of elements) {
+      const locator = element;
+      expect(locator).toBeVisible();
+    }
+  }
+
   async isPageValid(urlString: string): Promise<void> {
     const url = this.page.url();
     expect(url).toContain(urlString);

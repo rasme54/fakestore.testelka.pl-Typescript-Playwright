@@ -14,7 +14,7 @@ export class MyAccountPage {
   async deleteAccount(): Promise<void> {
     const url = this.page.url();
     if (url == "https://fakestore.testelka.pl/moje-konto/") {
-      this.selectSubPage(1);
+      this.selectTab(1);
     }
     const deleteButton = this.page.locator("a[class='delete-me']");
     await expect(async () => {
@@ -25,7 +25,7 @@ export class MyAccountPage {
   }
 
   async fillAccountInformation(user: any): Promise<void> {
-    await this.selectSubPage(3);
+    await this.selectTab(3);
     await this.page.locator("#account_first_name").fill(user.firstName);
     await this.page.locator("#account_last_name").fill(user.lastName);
     const displayName = await this.page.locator("#account_display_name").inputValue();
@@ -63,7 +63,7 @@ export class MyAccountPage {
   async isUserLoggedIn(user: any): Promise<void> {
     const url = this.page.url();
     if (url != "https://fakestore.testelka.pl/moje-konto/") {
-      this.selectSubPage(1);
+      this.selectTab(1);
     }
     let email = user.email;
     const userName = email.split("@")[0];
@@ -75,15 +75,15 @@ export class MyAccountPage {
   async logOutUser(): Promise<void> {
     const url = this.page.url();
     if (url != "https://fakestore.testelka.pl/moje-konto/") {
-      this.selectSubPage(1);
+      this.selectTab(1);
     }
     const logOutButton = this.page.locator("div[class='woocommerce-MyAccount-content'] > p > a").nth(0);
     await logOutButton.click({ force: true });
   }
 
-  async selectSubPage(number: number): Promise<void> {
+  async selectTab(number: number): Promise<void> {
     /**
-     * Navigates to a specifuc subpage
+     * Navigates to a specific tab
      * 1- Dashboard
      * 2- My orders
      * 3- Account edition

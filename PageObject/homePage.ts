@@ -10,9 +10,18 @@ class HomePage {
     this.utils = utils;
   }
 
-  async selectLogInPage(): Promise<void> {
-    await this.page.locator("li[id='menu-item-201'] > a").click();
-    await this.utils.isStringContains("div[class='u-column2 col-2'] > h2", "Zarejestruj się");
+  async selectSubpageFromHeaderNavigtion(number: number): Promise<void> {
+    /**
+     * Navigates to a specific subpage
+     * 1 - Main Page
+     * 2 - Shop
+     * 3 - Orders
+     * 4 - Cart
+     * 5 - My Account
+     * 6 - Wishlist
+     */
+    const option = number - 1;
+    await this.page.locator("#menu-menu > li > a").nth(option).click();
   }
 }
 

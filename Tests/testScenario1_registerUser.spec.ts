@@ -24,21 +24,21 @@ test.describe("Scenario 1: Register User", () => {
   test("TestCase1: Register User", async ({ page }) => {
     const user = newUser;
     test.setTimeout(60000);
-    await homePage.selectLogInPage();
+    await homePage.selectSubpageFromHeaderNavigtion(5);
     await loginPage.fillSignUpEntryFields(user);
     await myAccountPage.fillAccountInformation(user);
-    await myAccountPage.selectSubPage(4);
+    await myAccountPage.selectTab(4);
     await utils.isPageValid("https://fakestore.testelka.pl/moje-konto/edytuj-adres/");
-    await myAccountPage.selectSubPage(4);
+    await myAccountPage.selectTab(4);
     await myAccountPage.fillBillingAddressInformation(user);
     await myAccountPage.fillDeliveryAddressInformation(user);
-    await myAccountPage.selectSubPage(1);
+    await myAccountPage.selectTab(1);
     await myAccountPage.deleteAccount();
   });
 
   test("Test Case 5: Register User with existing email", async ({ page }) => {
     const user = exisitingUser;
-    await homePage.selectLogInPage();
+    await homePage.selectSubpageFromHeaderNavigtion(5);
     await loginPage.fillSignUpEntryFields(user);
     const expectedString = "Konto jest już zarejestrowane w exisitngjohn.doe@email.com. Zaloguj się lub użyj innego adresu e-mail.";
     await utils.isStringContains("ul[class='woocommerce-error'] > li", expectedString);
@@ -46,7 +46,7 @@ test.describe("Scenario 1: Register User", () => {
 
   test.skip("Helper Case: Delete User", async ({ page }) => {
     const user = newUser;
-    await homePage.selectLogInPage();
+    await homePage.selectSubpageFromHeaderNavigtion(5);
     await loginPage.fillLogInEntryFields(user);
     await myAccountPage.deleteAccount();
   });
