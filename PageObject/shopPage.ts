@@ -12,11 +12,23 @@ class ShopPage {
     await this.page.keyboard.press("Enter");
   }
 
-  async gatherProductInfoFromShopPage(productIndex: number): Promise<Array<{name: string; price: string}>> {
-    const listofProductInfo: Array<{name: string; price: string}> = [];
-    const name = this.page.locator("h2[class='woocommerce-loop-product__title']").nth(productIndex).textContent();
-    const price = this.page.locator("span[class='woocommerce-Price-amount amount']").nth(productIndex).textContent();
-    return listofProductInfo;
+  async gatherProductInfoFromShopPage(productIndex: number): Promise<any[]> {
+    const name = await this.page.locator("h2[class='woocommerce-loop-product__title']").nth(productIndex).textContent();
+    let price: string | null;
+
+    const productBlock = this.page.locator("ul[class='products columns-3'] > li").nth(productIndex);
+    const parentElement = productBlock.locator("span[class='price']");
+    const childElement = parentElement.locator("del[aria-hidden='true']");
+
+    if (childElement != null) {
+      price = await childElement.locator("span > bdi").nth(1).textContent();
+    } else {
+      price = await parentElement.locator("ins > span > bdi").textContent();
+    }
+
+    let listOfProductInfo = [name, price];
+
+    return listOfProductInfo;
   }
 
   async isProductSearched(): Promise<void> {}
@@ -31,6 +43,10 @@ class ShopPage {
     const option = number - 1;
     await this.page.locator("h2[class='woocommerce-loop-category__title']").nth(option).click();
     const url = this.page.url();
+  }
+
+  async selectProduct(productIndex: number): Promise<void> {
+    await this.page;
   }
 }
 

@@ -2,7 +2,7 @@ import { test, expect, Page } from "@playwright/test";
 import Utils from "./utils";
 import newUser from "../fixtures/newUser.json";
 
-export class MyAccountPage {
+class MyAccountPage {
   private page: Page;
   private utils: Utils;
 
