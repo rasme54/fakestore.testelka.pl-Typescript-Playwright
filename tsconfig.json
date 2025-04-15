@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "target": "ESNext",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "types": ["@types/node", "@playwright/test"]
+  },
+  "include": ["**/*.ts", "cucumber.js"]
+}

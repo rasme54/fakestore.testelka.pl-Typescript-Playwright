@@ -5,15 +5,18 @@
   "main": "index.js",
   "scripts": {
     "open": "npx playwright test --ui",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "test": "cucumber-js --require-module ts-node/register"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0",
     "@playwright/test": "^1.51.1",
     "@types/node": "^22.14.0",
     "playwright": "^1.51.1",
-    "prettier": "^3.5.3"
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2"
   }
 }
