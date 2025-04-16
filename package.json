@@ -6,7 +6,8 @@
   "scripts": {
     "open": "npx playwright test --ui",
     "prettier": "prettier --write .",
-    "test": "cucumber-js --require-module ts-node/register"
+    "test": "cucumber-js --require-module ts-node/register",
+    "cucumber": "cucumber-js test"
   },
   "keywords": [],
   "author": "",

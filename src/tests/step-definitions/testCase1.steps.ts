@@ -1,11 +1,11 @@
 import { Given, When, Then, BeforeAll } from "@cucumber/cucumber";
 import { chromium, Browser, Page } from "playwright";
 import { test } from "@playwright/test";
-import newUser from "../../fixtures/newUser.json";
-import HomePage from "../../PageObject/homePage";
-import LoginPage from "../../PageObject/loginPage";
-import MyAccountPage from "../../PageObject/myAccountPage";
-import Utils from "../../PageObject/utils";
+import newUser from "../../../fixtures/newUser.json";
+import HomePage from "../../../PageObject/homePage";
+import LoginPage from "../../../PageObject/loginPage";
+import MyAccountPage from "../../../PageObject/myAccountPage";
+import Utils from "../../../PageObject/utils";
 
 let browser: Browser;
 let page: Page;

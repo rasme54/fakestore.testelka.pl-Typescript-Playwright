@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "resolveJsonModule": true,
-    "target": "ESNext",
+    "target": "ES2020",
     "module": "CommonJS",
     "strict": true,
     "esModuleInterop": true,
@@ -9,5 +9,6 @@
     "outDir": "dist",
     "types": ["@types/node", "@playwright/test"]
   },
-  "include": ["**/*.ts", "cucumber.js"]
+  "include": ["**/*.ts", "cucumber.js"],
+  "exclude": ["node_modules"]
 }
