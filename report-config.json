@@ -1,0 +1,7 @@
+{
+  "theme": "bootstrap",
+  "jsonFile": "reports/cucumber-report.json",
+  "output": "reports/cucumber-report.html",
+  "reportSuiteAsScenarios": true,
+  "launchReport": true
+}

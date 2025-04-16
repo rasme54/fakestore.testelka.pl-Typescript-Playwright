@@ -17,7 +17,7 @@ const user = newUser;
 
 BeforeAll(async function () {
   // Launch the browser and create a new page
-  browser = await chromium.launch({ headless: true });
+  browser = await chromium.launch({ headless: false });
   const context = await browser.newContext();
   page = await context.newPage();
 
@@ -28,15 +28,14 @@ BeforeAll(async function () {
   myAccountPage = new MyAccountPage(page);
 
   await page.goto("https://fakestore.testelka.pl/");
-  await page.waitForTimeout(2000);
-  await utils.turnOffPopUp("p[class='woocommerce-store-notice demo_store']", "a[class='woocommerce-store-notice__dismiss-link']");
-});
+  await page.waitForTimeout(5000);
+  //await utils.turnOffPopUp("p[class='woocommerce-store-notice demo_store']", "a[class='woocommerce-store-notice__dismiss-link']");
+},);
 
-Given("I am on the main page", async function () {
+Given("I am on the main page", {timeout: 2 * 5000}, async function () {
   await utils.isPageValid("https://fakestore.testelka.pl/");
 });
 Then("I fill in the sign up entry fields and confirm", async function () {
-  test.setTimeout(60000);
   await homePage.selectSubpageFromHeaderNavigtion(5);
   await loginPage.fillSignUpEntryFields(user);
 });
