@@ -1,4 +1,4 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, Page, Locator } from "@playwright/test";
 
 class Utils {
   page: Page;
@@ -6,12 +6,17 @@ class Utils {
     this.page = page;
   }
 
-  async areElementsVisible(elements: any[]): Promise<void> {
+  async areElementsVisible(elements: Array<Locator>): Promise<void> {
     for (const element of elements) {
       const locator = element;
-      expect(locator).toBeVisible();
+      await expect(locator).toBeVisible();
     }
   }
+
+  // async isElementVisible(locator: string): Promise<void> {
+  //   const element = this.page.locator(locator);
+  //   expect(element).toBeVisible();
+  // }
 
   async isPageValid(urlString: string): Promise<void> {
     const url = this.page.url();
@@ -36,6 +41,16 @@ class Utils {
     if (element) {
       await this.page.locator(button).click();
     }
+  }
+
+  async gatherElementsIntoArray(locator: string): Promise<Array<any>> {
+    let arrayOfElements: Locator[] = [];
+    const element = this.page.locator(locator);
+    const numberOfElements = await this.page.locator(locator).count();
+    for (let i = 0; i < numberOfElements; i++) {
+      arrayOfElements.push(element.nth(i));
+    }
+    return arrayOfElements;
   }
 }
 
