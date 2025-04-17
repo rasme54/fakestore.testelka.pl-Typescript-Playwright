@@ -69,6 +69,23 @@ class Utils {
       return arrayOfElements;
     }
   }
+
+  async gatherSigleElementIntoVariable(locator: string, index?: number): Promise<any> {
+    if (index) {
+      index -= 1;
+      const element = await this.page.locator(locator).nth(index).textContent();
+      return element;
+    } else {
+      const element = await this.page.locator(locator).textContent();
+      return element;
+    }
+    // const element = this.page.locator(locator);
+    // const text = await element.textContent();
+    // return text;
+    // const option = index - 1;
+    // const categoryName = await this.page.locator(locator).nth(option).innerText();
+    // return categoryName;
+  }
 }
 
 export default Utils;

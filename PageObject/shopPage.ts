@@ -7,12 +7,18 @@ class ShopPage {
     this.page = page;
   }
 
-  async addToCartFromShopPage(): Promise<void> {
+  async addAllToCartFromShopPage(): Promise<void> {
     const numberOfProducts = await this.page.locator("ul[class='products columns-3'] > li").count();
     for (let i = 0; i < numberOfProducts; i++) {
       await this.page.locator("a[rel='nofollow']").nth(i).click();
     }
   }
+
+  async addProduct(productIndex: number): Promise<void> {
+    await this.page.locator("ul[class='products columns-3'] > li").nth(productIndex).click();
+  }
+
+  async addSigleProductFromShopPage(productIndex: number): Promise<void> {}
 
   async areSerchedProductsVisible(productName: string): Promise<void> {
     const expectedString = `Wyniki wyszukiwania: „${productName}”`;
@@ -56,10 +62,6 @@ class ShopPage {
     const option = number - 1;
     await this.page.locator("h2[class='woocommerce-loop-category__title']").nth(option).click();
     const url = this.page.url();
-  }
-
-  async selectProduct(productIndex: number): Promise<void> {
-    await this.page;
   }
 }
 

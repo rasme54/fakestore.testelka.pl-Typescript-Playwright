@@ -6,7 +6,6 @@ import MyAccountPage from "../PageObject/myAccountPage";
 import ProductPage from "../PageObject/productPage";
 import Utils from "../PageObject/utils";
 import ShopPage from "../PageObject/shopPage";
-import CategoryPage from "../PageObject/categoryPage";
 import existingUser from "../fixtures/existingUser.json";
 
 test.describe("Test Scenerio 4 - Search Product", () => {
@@ -16,7 +15,6 @@ test.describe("Test Scenerio 4 - Search Product", () => {
   let myAccountPage: MyAccountPage;
   let productPage: ProductPage;
   let shopPage: ShopPage;
-  let categoryPage: CategoryPage;
   let utils: Utils;
 
   test.beforeEach(async ({ page }) => {
@@ -27,7 +25,6 @@ test.describe("Test Scenerio 4 - Search Product", () => {
     myAccountPage = new MyAccountPage(page);
     productPage = new ProductPage(page);
     shopPage = new ShopPage(page);
-    categoryPage = new CategoryPage(page);
     await page.goto("/");
     await page.waitForTimeout(2000);
     await utils.turnOffPopUp("p[class='woocommerce-store-notice demo_store']", "a[class='woocommerce-store-notice__dismiss-link']");
@@ -46,12 +43,10 @@ test.describe("Test Scenerio 4 - Search Product", () => {
   test("Test Case 18: View Category Products", async ({ page }) => {
     await homePage.selectSubpageFromHeaderNavigtion(2);
     const elements = await utils.gatherElementsIntoArray("ul[class='product-categories'] > li");
-    console.log(elements);
-    console.log(typeof elements[1]);
     await utils.areElementsVisible(elements);
     const indexOfCategory = 2;
     const categoryLocator = "ul[class='product-categories'] > li > a";
-    const categoryName = (await categoryPage.collectCategoryNameIntoVariable(categoryLocator, indexOfCategory)).toLocaleLowerCase();
+    const categoryName = (await utils.gatherSigleElementIntoVariable(categoryLocator, indexOfCategory)).toLocaleLowerCase();
     await shopPage.selectCategoryOfProduct(indexOfCategory);
     const url = `https://fakestore.testelka.pl/product-category/${categoryName}`;
     await utils.isPageValid(url);
@@ -68,7 +63,7 @@ test.describe("Test Scenerio 4 - Search Product", () => {
     const productNameLocator = "ul[class='products columns-3'] > li > a > h2";
     const collectingTextContent = true;
     const arrayOfProductsNames = await utils.gatherElementsIntoArray(productNameLocator, collectingTextContent);
-    await shopPage.addToCartFromShopPage();
+    await shopPage.addAllToCartFromShopPage();
     await homePage.selectSubpageFromHeaderNavigtion(4);
     let arrayOfExpectedProductsNames = await utils.gatherElementsIntoArray("td[class='product-name'] > a", collectingTextContent);
     await utils.compareElement(arrayOfExpectedProductsNames, arrayOfProductsNames);

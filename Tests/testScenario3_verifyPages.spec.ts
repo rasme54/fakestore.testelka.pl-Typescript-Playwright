@@ -1,5 +1,4 @@
 import { test } from "@playwright/test";
-import CategoryPage from "../PageObject/categoryPage";
 import LoginPage from "../PageObject/loginPage";
 import SignUpPage from "../PageObject/signUpPage";
 import HomePage from "../PageObject/homePage";
@@ -10,7 +9,6 @@ import existingUser from "../fixtures/existingUser.json";
 import newUser from "../fixtures/newUser.json";
 
 test.describe("Scenario 3: Verify Pages", () => {
-  let categoryPage: CategoryPage;
   let homePage: HomePage;
   let loginPage: LoginPage;
   let signUpPage: SignUpPage;
@@ -19,7 +17,6 @@ test.describe("Scenario 3: Verify Pages", () => {
   let utils: Utils;
 
   test.beforeEach(async ({ page }) => {
-    categoryPage = new CategoryPage(page);
     utils = new Utils(page);
     homePage = new HomePage(page, utils);
     loginPage = new LoginPage(page);
@@ -34,7 +31,7 @@ test.describe("Scenario 3: Verify Pages", () => {
   test("Test Case 8: Verify All Products and product detail page", async ({ page }) => {
     await homePage.selectSubpageFromHeaderNavigtion(2);
     await shopPage.selectCategoryOfProduct(1);
-    await categoryPage.selectProduct(0);
+    await shopPage.addProduct(0);
     await utils.isPageValid("https://fakestore.testelka.pl/product/egipt-el-gouna/");
     const productName = page.locator("h1[class='product_title entry-title']");
     const category = page.locator("span[class='posted_in']");
