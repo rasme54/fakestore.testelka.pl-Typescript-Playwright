@@ -13,6 +13,10 @@ class Utils {
     }
   }
 
+  async compareElement(firstElement: any, secondElement: any): Promise<void> {
+    expect(firstElement).toEqual(secondElement);
+  }
+
   // async isElementVisible(locator: string): Promise<void> {
   //   const element = this.page.locator(locator);
   //   expect(element).toBeVisible();
@@ -43,14 +47,27 @@ class Utils {
     }
   }
 
-  async gatherElementsIntoArray(locator: string): Promise<Array<any>> {
-    let arrayOfElements: Locator[] = [];
-    const element = this.page.locator(locator);
+  async gatherElementsIntoArray(locator: any, collectingTextContent?: boolean): Promise<Array<any>> {
+    /**
+     * allowed types of elements:
+     * locator
+     * string (textContent())
+     */
+    let arrayOfElements: any[] = [];
     const numberOfElements = await this.page.locator(locator).count();
-    for (let i = 0; i < numberOfElements; i++) {
-      arrayOfElements.push(element.nth(i));
+    const element = this.page.locator(locator);
+    if (collectingTextContent) {
+      for (let i = 0; i < numberOfElements; i++) {
+        const text = await element.nth(i).textContent();
+        arrayOfElements.push(text);
+      }
+      return arrayOfElements;
+    } else {
+      for (let i = 0; i < numberOfElements; i++) {
+        arrayOfElements.push(element.nth(i));
+      }
+      return arrayOfElements;
     }
-    return arrayOfElements;
   }
 }
 

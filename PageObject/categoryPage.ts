@@ -8,8 +8,9 @@ class CategoryPage {
   }
 
   async selectProduct(number: number): Promise<void> {
+    const index = number - 1;
     const product = this.page.locator("ul[class='products columns-3'] > li > a[class='woocommerce-LoopProduct-link woocommerce-loop-product__link']");
-    await product.nth(number).click();
+    await product.nth(index).click();
   }
 
   async collectCategoryNameIntoVariable(locator: string, index: number): Promise<string> {

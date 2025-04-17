@@ -7,6 +7,19 @@ class ShopPage {
     this.page = page;
   }
 
+  async addToCartFromShopPage(): Promise<void> {
+    const numberOfProducts = await this.page.locator("ul[class='products columns-3'] > li").count();
+    for (let i = 0; i < numberOfProducts; i++) {
+      await this.page.locator("a[rel='nofollow']").nth(i).click();
+    }
+  }
+
+  async areSerchedProductsVisible(productName: string): Promise<void> {
+    const expectedString = `Wyniki wyszukiwania: „${productName}”`;
+    const actualString = await this.page.locator("header[class='woocommerce-products-header'] > h1").textContent();
+    expect(actualString).toContain(expectedString);
+  }
+
   async findProduct(product: string): Promise<void> {
     await this.page.locator("#woocommerce-product-search-field-0").fill(product);
     await this.page.keyboard.press("Enter");
