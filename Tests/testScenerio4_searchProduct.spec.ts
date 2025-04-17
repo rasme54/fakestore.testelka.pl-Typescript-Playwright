@@ -5,6 +5,7 @@ import MyAccountPage from "../PageObject/myAccountPage";
 import ProductPage from "../PageObject/productPage";
 import Utils from "../PageObject/utils";
 import ShopPage from "../PageObject/shopPage";
+import CategoryPage from "../PageObject/categoryPage";
 
 test.describe("Test Scenerio 4 - Search Product", () => {
   let homePage: HomePage;
@@ -12,6 +13,7 @@ test.describe("Test Scenerio 4 - Search Product", () => {
   let myAccountPage: MyAccountPage;
   let productPage: ProductPage;
   let shopPage: ShopPage;
+  let categoryPage: CategoryPage;
   let utils: Utils;
 
   test.beforeEach(async ({ page }) => {
@@ -21,6 +23,7 @@ test.describe("Test Scenerio 4 - Search Product", () => {
     myAccountPage = new MyAccountPage(page);
     productPage = new ProductPage(page);
     shopPage = new ShopPage(page);
+    categoryPage = new CategoryPage(page);
     await page.goto("/");
     await page.waitForTimeout(2000);
     await utils.turnOffPopUp("p[class='woocommerce-store-notice demo_store']", "a[class='woocommerce-store-notice__dismiss-link']");
@@ -37,16 +40,12 @@ test.describe("Test Scenerio 4 - Search Product", () => {
   test("Test Case 18: View Category Products", async ({ page }) => {
     await homePage.selectSubpageFromHeaderNavigtion(2);
     const elements = await utils.gatherElementsIntoArray("ul[class='product-categories'] > li");
-    console.log(elements);
     await utils.areElementsVisible(elements);
-
-    // 1. Launch browser
-    // 2. Navigate to url 'http://automationexercise.com'
-    // 3. Verify that categories are visible on right side bar
-    // 4. Click on 'Wspinaczka' category
-    // 5. Click on any category link under 'Women' category, for example: Dress
-    // 6. Verify that category page is displayed and confirm text 'WOMEN - TOPS PRODUCTS'
-    // 7. On left side bar, click on any sub-category link of 'Men' category
-    // 8. Verify that user is navigated to that category page
+    const indexOfCategory = 2;
+    const categoryLocator = "ul[class='product-categories'] > li > a";
+    const categoryName = (await categoryPage.collectCategoryNameIntoVariable(categoryLocator, indexOfCategory)).toLocaleLowerCase();
+    await productPage.selectCategoryOfProduct(indexOfCategory);
+    const url = `https://fakestore.testelka.pl/product-category/${categoryName}`;
+    await utils.isPageValid(url);
   });
 });
