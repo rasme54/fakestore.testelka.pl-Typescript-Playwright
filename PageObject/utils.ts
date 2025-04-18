@@ -6,7 +6,7 @@ class Utils {
     this.page = page;
   }
 
-  async areElementsVisible(elements: Array<Locator>): Promise<void> {
+  async areElementsVisible(elements: Array<any>): Promise<void> {
     for (const element of elements) {
       const locator = element;
       await expect(locator).toBeVisible();
@@ -79,7 +79,7 @@ class Utils {
       return arrayOfElements;
     } else {
       for (let i = 0; i < numberOfElements; i++) {
-        arrayOfElements.push(element.nth(i));
+        arrayOfElements.push(element);
       }
       return arrayOfElements;
     }
@@ -92,6 +92,12 @@ class Utils {
     } else {
       const element = await this.page.locator(locator).textContent();
       return element;
+    }
+  }
+
+  async waitUntilElementsAreVisible(locators: Array<Locator>): Promise<void> {
+    for (const locator of locators) {
+      await expect(locator).toBeVisible(); // Ensure each locator is visible
     }
   }
 }

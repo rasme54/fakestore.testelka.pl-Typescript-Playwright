@@ -15,10 +15,8 @@ class ShopPage {
   }
 
   async addProduct(productIndex: number): Promise<void> {
-    await this.page.locator("ul[class='products columns-3'] > li").nth(productIndex).click();
+    await this.page.locator("ul[class='products columns-3'] > li > a[data-quantity='1']").nth(productIndex).click({ force: true });
   }
-
-  async addSigleProductFromShopPage(productIndex: number): Promise<void> {}
 
   async areSerchedProductsVisible(productName: string): Promise<void> {
     const expectedString = `Wyniki wyszukiwania: „${productName}”`;

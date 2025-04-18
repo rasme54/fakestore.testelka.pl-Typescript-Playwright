@@ -30,6 +30,10 @@ test.describe("TS7 - addingProductToCart", () => {
     const useInnerTextMethod = true;
     await homePage.selectSubpageFromHeaderNavigtion(2);
     await shopPage.selectCategoryOfProduct(1);
+    const addToCartButtons = await utils.gatherElementsIntoArray("ul[class='products columns-3'] > li > a[data-quantity='1']");
+    console.log(addToCartButtons);
+
+    await utils.waitUntilElementsAreVisible(addToCartButtons);
     await shopPage.addProduct(0);
     await shopPage.addProduct(1);
     const firstProductName = await utils.gatherSigleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 0);
