@@ -1,6 +1,5 @@
 import { test, expect, Page } from "@playwright/test";
 import Utils from "./utils";
-import newUser from "../fixtures/newUser.json";
 
 class MyAccountPage {
   private page: Page;

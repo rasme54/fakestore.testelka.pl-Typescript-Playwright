@@ -47,19 +47,34 @@ class Utils {
     }
   }
 
-  async gatherElementsIntoArray(locator: any, collectingTextContent?: boolean): Promise<Array<any>> {
+  async gatherElementsIntoArray(locator: any, collectingTextValue?: boolean, useInnerTextMethod?: boolean): Promise<Array<any>> {
     /**
-     * allowed types of elements:
-     * locator
-     * string (textContent())
+     * allowed types of elementsto gather:
+     *  - locator
+     *  - string (textContent(), innerText())
+     *
+     * methods of gatering data:
+     * if collectingTextValue == true:
+     *  - innerText() if useInnerTextMethod == true
+     *  - textContent() if useInnerTextMethod == false/null
+     *
+     * if collectingTextValue == false/null:
+     *  - assigning locators into array
      */
     let arrayOfElements: any[] = [];
     const numberOfElements = await this.page.locator(locator).count();
     const element = this.page.locator(locator);
-    if (collectingTextContent) {
-      for (let i = 0; i < numberOfElements; i++) {
-        const text = await element.nth(i).textContent();
-        arrayOfElements.push(text);
+    if (collectingTextValue) {
+      if (useInnerTextMethod) {
+        for (let i = 0; i < numberOfElements; i++) {
+          const text = await element.nth(i).textContent();
+          arrayOfElements.push(text);
+        }
+      } else {
+        for (let i = 0; i < numberOfElements; i++) {
+          const text = await element.nth(i).textContent();
+          arrayOfElements.push(text);
+        }
       }
       return arrayOfElements;
     } else {
@@ -71,20 +86,13 @@ class Utils {
   }
 
   async gatherSigleElementIntoVariable(locator: string, index?: number): Promise<any> {
-    if (index) {
-      index -= 1;
+    if (index != null) {
       const element = await this.page.locator(locator).nth(index).textContent();
       return element;
     } else {
       const element = await this.page.locator(locator).textContent();
       return element;
     }
-    // const element = this.page.locator(locator);
-    // const text = await element.textContent();
-    // return text;
-    // const option = index - 1;
-    // const categoryName = await this.page.locator(locator).nth(option).innerText();
-    // return categoryName;
   }
 }
 

@@ -26,9 +26,22 @@ test.describe("TS7 - addingProductToCart", () => {
     await utils.turnOffPopUp("p[class='woocommerce-store-notice demo_store']", "a[class='woocommerce-store-notice__dismiss-link']");
   });
   test("Test Case 12: Add Products in Cart", async ({ page }) => {
+    const collectingTextValue = true;
+    const useInnerTextMethod = true;
     await homePage.selectSubpageFromHeaderNavigtion(2);
     await shopPage.selectCategoryOfProduct(1);
     await shopPage.addProduct(0);
+    await shopPage.addProduct(1);
+    const firstProductName = await utils.gatherSigleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 0);
+    const secondProductName = await utils.gatherSigleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 1);
+    const productNamesArray = [firstProductName, secondProductName];
+    //const nameFromShopPage = await utils.gatherElementsIntoArray("ul[class='products columns-3'] > li > a > h2", collectingTextContent);
+    await homePage.selectSubpageFromHeaderNavigtion(4);
+    const namesFromCartPage = await utils.gatherElementsIntoArray("tr > td[class='product-name'] > a", collectingTextValue, useInnerTextMethod);
+    //await utils.compareElement(nameFromCartPage, nameFromShopPage)
+    console.log(productNamesArray);
+    console.log(namesFromCartPage);
+
     // 4. Click 'Products' button
     // 5. Hover over first product and click 'Add to cart'
     // 6. Click 'Continue Shopping' button

@@ -32,7 +32,10 @@ test.describe("Scenario 2: LogInLogOut", () => {
     const user = fakeUser;
     await homePage.selectSubpageFromHeaderNavigtion(5);
     await loginPage.fillLogInEntryFields(user);
-    utils.isStringContains("ul[class='woocommerce-error'] > li", "Nieznany adres e-mail. Proszę sprawdzić ponownie lub wypróbować swoją nazwę użytkownika.");
+    utils.isStringContains(
+      "ul[class='woocommerce-error'] > li",
+      "Nieznany adres e-mail. Proszę sprawdzić ponownie lub wypróbować swoją nazwę użytkownika.",
+    );
   });
 
   test("Test Case 4: Logout User", async ({ page }) => {
