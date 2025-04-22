@@ -86,7 +86,7 @@ class Utils {
     }
   }
 
-  async gatherSigleElementIntoVariable(locator: string, index?: number): Promise<any> {
+  async gatherSingleElementIntoVariable(locator: string, index?: number): Promise<any> {
     if (index != null) {
       const element = await this.page.locator(locator).nth(index).textContent();
       return element;

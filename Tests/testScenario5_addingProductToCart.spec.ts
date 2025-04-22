@@ -27,6 +27,7 @@ test.describe("TS7 - addingProductToCart", () => {
     await page.waitForTimeout(2000);
     await utils.turnOffPopUp("p[class='woocommerce-store-notice demo_store']", "a[class='woocommerce-store-notice__dismiss-link']");
   });
+
   test("Test Case 12: Add Products in Cart", async ({ page }) => {
     const collectingTextValue = true;
     const useInnerTextMethod = true;
@@ -38,9 +39,9 @@ test.describe("TS7 - addingProductToCart", () => {
     const firstProductDetails = await shopPage.collectProductDetails(0);
     await shopPage.addProductToCartFromShopPage(1);
     const secondProductDetails = await shopPage.collectProductDetails(1);
-    const firstProductName = await utils.normalizeText(await utils.gatherSigleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 0));
+    const firstProductName = await utils.normalizeText(await utils.gatherSingleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 0));
     const secondProductName = await utils.normalizeText(
-      await utils.gatherSigleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 1),
+      await utils.gatherSingleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 1),
     );
     const productNamesArray = [firstProductName, secondProductName];
     await homePage.selectSubpageFromHeaderNavigtion(4);
@@ -51,15 +52,18 @@ test.describe("TS7 - addingProductToCart", () => {
   });
 
   test("Test Case 17: Remove Products From Cart", async ({ page }) => {
-    //     1. Launch browser
-    // 2. Navigate to url 'http://automationexercise.com'
-    // 3. Verify that home page is visible successfully
-    // 4. Add products to cart
-    // 5. Click 'Cart' button
-    // 6. Verify that cart page is displayed
-    // 7. Click 'X' button corresponding to particular product
-    // 8. Verify that product is removed from the cart
+    const collectingTextValue = true;
+    const useInnerTextMethod = true;
+    await homePage.selectSubpageFromHeaderNavigtion(2);
+    await shopPage.selectCategoryOfProduct(1);
+    const productName = await utils.normalizeText(await utils.gatherSingleElementIntoVariable("ul[class='products columns-3'] > li > a > h2",2))
+    await shopPage.addProductToCartFromShopPage(2)
+    await homePage.selectSubpageFromHeaderNavigtion(4)
+    const cartProductName = await utils.gatherSingleElementIntoVariable("tr > td[class='product-name'] > a", 0)
+    await utils.compareElement(productName, cartProductName)
+    await cartPage.removeItemFromCart(0)
   });
+
   test("Test Case 22: Add to cart from Recommended items", async ({ page }) => {
     // 1. Launch browser
     // 2. Navigate to url 'http://automationexercise.com'

@@ -46,7 +46,7 @@ test.describe("Test Scenerio 4 - Search Product", () => {
     await utils.areElementsVisible(elements);
     const indexOfCategory = 2;
     const categoryLocator = "ul[class='product-categories'] > li > a";
-    const categoryName = (await utils.gatherSigleElementIntoVariable(categoryLocator, indexOfCategory)).toLocaleLowerCase();
+    const categoryName = (await utils.gatherSingleElementIntoVariable(categoryLocator, indexOfCategory)).toLocaleLowerCase();
     await shopPage.selectCategoryOfProduct(indexOfCategory);
     const url = `https://fakestore.testelka.pl/product-category/${categoryName}`;
     await utils.isPageValid(url);
