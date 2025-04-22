@@ -8,6 +8,7 @@ import ShopPage from "../PageObject/shopPage";
 import Utils from "../PageObject/utils";
 
 test.describe("TS7 - addingProductToCart", () => {
+  let cartPage: CartPage;
   let homePage: HomePage;
   let loginPage: LoginPage;
   let myAccountPage: MyAccountPage;
@@ -15,6 +16,7 @@ test.describe("TS7 - addingProductToCart", () => {
   let shopPage: ShopPage;
   let utils: Utils;
   test.beforeEach(async ({ page }) => {
+    cartPage = new CartPage(page);
     utils = new Utils(page);
     homePage = new HomePage(page, utils);
     loginPage = new LoginPage(page);
@@ -31,27 +33,23 @@ test.describe("TS7 - addingProductToCart", () => {
     await homePage.selectSubpageFromHeaderNavigtion(2);
     await shopPage.selectCategoryOfProduct(1);
     const addToCartButtons = await utils.gatherElementsIntoArray("ul[class='products columns-3'] > li > a[data-quantity='1']");
-    await utils.waitUntilElementsAreVisible(addToCartButtons); // <-- problem
+    await utils.waitUntilElementsAreVisible(addToCartButtons);
     await shopPage.addProductToCartFromShopPage(0);
+    const firstProductDetails = await shopPage.collectProductDetails(0);
     await shopPage.addProductToCartFromShopPage(1);
-    const firstProductName = await utils.gatherSigleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 0);
-    const secondProductName = await utils.gatherSigleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 1);
+    const secondProductDetails = await shopPage.collectProductDetails(1);
+    const firstProductName = await utils.normalizeText(await utils.gatherSigleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 0));
+    const secondProductName = await utils.normalizeText(
+      await utils.gatherSigleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 1),
+    );
     const productNamesArray = [firstProductName, secondProductName];
-    //const nameFromShopPage = await utils.gatherElementsIntoArray("ul[class='products columns-3'] > li > a > h2", collectingTextContent);
     await homePage.selectSubpageFromHeaderNavigtion(4);
     const namesFromCartPage = await utils.gatherElementsIntoArray("tr > td[class='product-name'] > a", collectingTextValue, useInnerTextMethod);
-    //await utils.compareElement(nameFromCartPage, nameFromShopPage)
-    console.log(productNamesArray);
-    console.log(namesFromCartPage);
-
-    // 4. Click 'Products' button
-    // 5. Hover over first product and click 'Add to cart'
-    // 6. Click 'Continue Shopping' button
-    // 7. Hover over second product and click 'Add to cart'
-    // 8. Click 'View Cart' button
-    // 9. Verify both products are added to Cart
-    // 10. Verify their prices, quantity and total price
+    await utils.compareElement(namesFromCartPage, productNamesArray);
+    await cartPage.verifyProductDetails(0, firstProductDetails[0], firstProductDetails[1]);
+    await cartPage.verifyProductDetails(1, secondProductDetails[0], secondProductDetails[1]);
   });
+
   test("Test Case 17: Remove Products From Cart", async ({ page }) => {
     //     1. Launch browser
     // 2. Navigate to url 'http://automationexercise.com'

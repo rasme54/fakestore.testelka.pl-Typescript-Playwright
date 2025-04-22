@@ -17,11 +17,6 @@ class Utils {
     expect(firstElement).toEqual(secondElement);
   }
 
-  // async isElementVisible(locator: string): Promise<void> {
-  //   const element = this.page.locator(locator);
-  //   expect(element).toBeVisible();
-  // }
-
   async isPageValid(urlString: string): Promise<void> {
     const url = this.page.url();
     expect(url).toContain(urlString);
@@ -34,6 +29,12 @@ class Utils {
       expect(text).toContain(string);
     });
   }
+
+  async normalizeText(text: string): Promise<string> {
+    const normalizedString = text.replace(/\u2013/g, "-").trim();
+    return normalizedString;
+  }
+
   async selectFromDropdown(value: string): Promise<void> {
     await this.page.locator("span[class='select2-selection__arrow']").click({ force: true });
     await this.page.locator("input[class='select2-search__field']").fill(value);

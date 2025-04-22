@@ -24,6 +24,15 @@ class ShopPage {
     expect(actualString).toContain(expectedString);
   }
 
+  async collectProductDetails(index: number): Promise<any[]> {
+    let arrayOfProductDetails: any[] = [];
+    const price = await this.page.locator("span[class='price'] > span > bdi").nth(index).textContent();
+    const quantity = await this.page.locator("ul[class='products columns-3'] > li > a[data-quantity='1']").nth(index).getAttribute("data-quantity");
+    arrayOfProductDetails.push(price);
+    arrayOfProductDetails.push(quantity);
+    return arrayOfProductDetails;
+  }
+
   async findProduct(product: string): Promise<void> {
     await this.page.locator("#woocommerce-product-search-field-0").fill(product);
     await this.page.keyboard.press("Enter");
