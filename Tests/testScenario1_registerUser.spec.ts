@@ -44,7 +44,7 @@ test.describe("Scenario 1: Register User", () => {
     await utils.isStringContains("ul[class='woocommerce-error'] > li", expectedString);
   });
 
-  test.skip("Helper Case: Delete User", async ({ page }) => {
+  test("Helper Case: Delete User", async ({ page }) => {
     const user = newUser;
     await homePage.selectSubpageFromHeaderNavigtion(5);
     await loginPage.fillLogInEntryFields(user);

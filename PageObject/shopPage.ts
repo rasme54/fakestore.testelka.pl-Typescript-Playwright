@@ -14,7 +14,7 @@ class ShopPage {
     }
   }
 
-  async addProduct(productIndex: number): Promise<void> {
+  async addProductToCartFromShopPage(productIndex: number): Promise<void> {
     await this.page.locator("ul[class='products columns-3'] > li > a[data-quantity='1']").nth(productIndex).click({ force: true });
   }
 
@@ -46,6 +46,13 @@ class ShopPage {
     let listOfProductInfo = [name, price];
 
     return listOfProductInfo;
+  }
+
+  async goToProductPage(productIndex: number): Promise<void> {
+    const product = "ul[class='products columns-3'] > li > a > h2"
+    await this.page.locator(product).nth(productIndex).textContent()
+    await this.page.locator(product).nth(productIndex).click({force: true});
+
   }
 
   async isProductSearched(): Promise<void> {}

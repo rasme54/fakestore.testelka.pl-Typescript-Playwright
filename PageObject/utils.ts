@@ -63,23 +63,23 @@ class Utils {
      */
     let arrayOfElements: any[] = [];
     const numberOfElements = await this.page.locator(locator).count();
-    const element = this.page.locator(locator);
+    //const element = this.page.locator(locator);
     if (collectingTextValue) {
       if (useInnerTextMethod) {
         for (let i = 0; i < numberOfElements; i++) {
-          const text = await element.nth(i).textContent();
+          const text = await this.page.locator(locator).nth(i).textContent();
           arrayOfElements.push(text);
         }
       } else {
         for (let i = 0; i < numberOfElements; i++) {
-          const text = await element.nth(i).textContent();
+          const text = await this.page.locator(locator).nth(i).textContent();
           arrayOfElements.push(text);
         }
       }
       return arrayOfElements;
     } else {
       for (let i = 0; i < numberOfElements; i++) {
-        arrayOfElements.push(element);
+        arrayOfElements.push(locator);
       }
       return arrayOfElements;
     }
@@ -95,9 +95,11 @@ class Utils {
     }
   }
 
-  async waitUntilElementsAreVisible(locators: Array<Locator>): Promise<void> {
-    for (const locator of locators) {
-      await expect(locator).toBeVisible(); // Ensure each locator is visible
+  async waitUntilElementsAreVisible(locator: Array<string>): Promise<void> {
+    const numberOfElements = locator.length
+    for (let i=0; i < numberOfElements; i++) {
+      const element = this.page.locator(locator[i]).nth(i)
+      await expect(element).toBeVisible();
     }
   }
 }

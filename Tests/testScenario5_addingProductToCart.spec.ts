@@ -31,11 +31,9 @@ test.describe("TS7 - addingProductToCart", () => {
     await homePage.selectSubpageFromHeaderNavigtion(2);
     await shopPage.selectCategoryOfProduct(1);
     const addToCartButtons = await utils.gatherElementsIntoArray("ul[class='products columns-3'] > li > a[data-quantity='1']");
-    console.log(addToCartButtons);
-
-    await utils.waitUntilElementsAreVisible(addToCartButtons);
-    await shopPage.addProduct(0);
-    await shopPage.addProduct(1);
+    await utils.waitUntilElementsAreVisible(addToCartButtons); // <-- problem
+    await shopPage.addProductToCartFromShopPage(0);
+    await shopPage.addProductToCartFromShopPage(1);
     const firstProductName = await utils.gatherSigleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 0);
     const secondProductName = await utils.gatherSigleElementIntoVariable("ul[class='products columns-3'] > li > a > h2", 1);
     const productNamesArray = [firstProductName, secondProductName];

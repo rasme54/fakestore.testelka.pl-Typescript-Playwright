@@ -65,12 +65,16 @@ test.describe("Test Scenerio 4 - Search Product", () => {
     const arrayOfProductsNames = await utils.gatherElementsIntoArray(productNameLocator, collectingTextContent);
     await shopPage.addAllToCartFromShopPage();
     await homePage.selectSubpageFromHeaderNavigtion(4);
-    let arrayOfExpectedProductsNames = await utils.gatherElementsIntoArray("td[class='product-name'] > a", collectingTextContent);
-    await utils.compareElement(arrayOfExpectedProductsNames, arrayOfProductsNames);
+    let arrayOfExpectedProductsNames = await utils.gatherElementsIntoArray("td[class='product-name'] > a", collectingTextContent); // <-- problem
+    console.log(arrayOfExpectedProductsNames)
+    console.log(arrayOfProductsNames)
+
+    await utils.compareElement(arrayOfExpectedProductsNames, arrayOfProductsNames); 
     await homePage.selectSubpageFromHeaderNavigtion(5);
     await loginPage.fillLogInEntryFields(user);
     await homePage.selectSubpageFromHeaderNavigtion(4);
     arrayOfExpectedProductsNames = await utils.gatherElementsIntoArray("td[class='product-name'] > a", collectingTextContent);
+    
     await utils.compareElement(arrayOfExpectedProductsNames, arrayOfProductsNames);
   });
 });
