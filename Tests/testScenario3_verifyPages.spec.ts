@@ -31,7 +31,7 @@ test.describe("Scenario 3: Verify Pages", () => {
   test("Test Case 8: Verify All Products and product detail page", async ({ page }) => {
     await homePage.selectSubpageFromHeaderNavigtion(2);
     await shopPage.selectCategoryOfProduct(1);
-    await shopPage.addProductToCartFromShopPage(0);
+    await shopPage.showProductDetails(0);
     await utils.isPageValid("https://fakestore.testelka.pl/product/egipt-el-gouna/");
     const productName = page.locator("h1[class='product_title entry-title']");
     const category = page.locator("span[class='posted_in']");

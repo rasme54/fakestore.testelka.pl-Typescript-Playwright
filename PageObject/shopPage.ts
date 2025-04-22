@@ -49,10 +49,9 @@ class ShopPage {
   }
 
   async goToProductPage(productIndex: number): Promise<void> {
-    const product = "ul[class='products columns-3'] > li > a > h2"
-    await this.page.locator(product).nth(productIndex).textContent()
-    await this.page.locator(product).nth(productIndex).click({force: true});
-
+    const product = "ul[class='products columns-3'] > li > a > h2";
+    await this.page.locator(product).nth(productIndex).textContent();
+    await this.page.locator(product).nth(productIndex).click({ force: true });
   }
 
   async isProductSearched(): Promise<void> {}
@@ -67,6 +66,10 @@ class ShopPage {
     const option = number - 1;
     await this.page.locator("h2[class='woocommerce-loop-category__title']").nth(option).click();
     const url = this.page.url();
+  }
+
+  async showProductDetails(productIndex: number): Promise<void> {
+    await this.page.locator("ul[class='products columns-3'] > li > a > img").nth(productIndex).click({ force: true });
   }
 }
 

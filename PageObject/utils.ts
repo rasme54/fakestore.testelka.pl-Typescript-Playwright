@@ -96,9 +96,9 @@ class Utils {
   }
 
   async waitUntilElementsAreVisible(locator: Array<string>): Promise<void> {
-    const numberOfElements = locator.length
-    for (let i=0; i < numberOfElements; i++) {
-      const element = this.page.locator(locator[i]).nth(i)
+    const numberOfElements = locator.length;
+    for (let i = 0; i < numberOfElements; i++) {
+      const element = this.page.locator(locator[i]).nth(i);
       await expect(element).toBeVisible();
     }
   }
