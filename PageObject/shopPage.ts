@@ -14,8 +14,8 @@ class ShopPage {
     }
   }
 
-  async addProductToCartFromShopPage(productIndex: number): Promise<void> {
-    await this.page.locator("ul[class='products columns-3'] > li > a[data-quantity='1']").nth(productIndex).click({ force: true });
+  async addProductToCartFromShopPage(locator: string, productIndex: number): Promise<void> {
+    await this.page.locator(locator).nth(productIndex).click({ force: true });
   }
 
   async areSerchedProductsVisible(productName: string): Promise<void> {

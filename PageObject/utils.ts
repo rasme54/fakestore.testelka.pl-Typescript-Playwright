@@ -96,6 +96,10 @@ class Utils {
     }
   }
 
+  async scrollIntoElement(element: string): Promise<void> {
+    await this.page.locator(element).scrollIntoViewIfNeeded();
+  }
+
   async waitUntilElementsAreVisible(locator: Array<string>): Promise<void> {
     const numberOfElements = locator.length;
     for (let i = 0; i < numberOfElements; i++) {

@@ -12,10 +12,10 @@ class CartPage {
     expect(quantity).toEqual(cartQuantity);
   }
 
-  async removeItemFromCart(index: number): Promise<void>{
-    await this.page.locator("td[class='product-remove'] > a"). nth(index).click({force: true})
-    const banner = this.page.locator("div[class='woocommerce'] > div > div[class='woocommerce-message']")
-    expect(banner).toBeVisible()
+  async removeItemFromCart(index: number): Promise<void> {
+    await this.page.locator("td[class='product-remove'] > a").nth(index).click({ force: true });
+    const banner = this.page.locator("div[class='woocommerce'] > div > div[class='woocommerce-message']");
+    expect(banner).toBeVisible();
   }
 }
 
